@@ -20,8 +20,8 @@ export default tseslint.config(
       "simple-import-sort": simpleImportSort,
     },
     rules: {
-      "no-unused-vars": "error",
       ...reactHooks.configs.recommended.rules,
+      
       "object-curly-spacing": ["warn", "always"],
       "newline-before-return": "error",
 
