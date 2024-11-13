@@ -3,7 +3,7 @@ import { useDateConversion } from "@hooks/useDateConversion.ts";
 
 import { TodoCardProps } from "./todo-card.types.ts";
 
-import "./todo-card.style.css"
+import "./todo-card.styles.css"
 
 export const TodoCard: FC<TodoCardProps> = ({
   title,

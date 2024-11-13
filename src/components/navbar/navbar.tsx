@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { RoutersPath } from "@containers/router/constants"
 
-import "./navbar.css";
+import "./navbar.styles.css";
 
 export const Navbar = () => {
   return (
