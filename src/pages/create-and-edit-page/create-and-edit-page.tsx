@@ -3,12 +3,14 @@ import { TodoForm } from "@components/todo-form/todo-form";
 import { useStorageManagement } from "@hooks/useStorageManagement";
 import { RootTodos } from "src/types";
 
+import "./create-and-edit-page.styles.css"
+
 
 export const CreateAndEditPage: React.FC = () => {
   const { id } = useParams<{id: string}>();
   const navigate = useNavigate();
   const { saveTodoToLocalStorage } = useStorageManagement()
-  const initialData = id ? todos.find((todo) => todo.id === id) : undefined;
+  // const initialData = id ? todos.find((todo) => todo.id === id) : undefined;
 
   const handleFormSubmit = (todo: RootTodos) => {
     if (id) {
@@ -22,9 +24,10 @@ export const CreateAndEditPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="create-and-edit-page">
+
       <h2>{id ? "Редактировать задачу" : "Создать задачу"}</h2>
-      <TodoForm initialData={initialData} onSubmit={handleFormSubmit} />
+      <TodoForm /*initialData={initialData}*/ onSubmit={handleFormSubmit} />
     </div>
   );
 };
