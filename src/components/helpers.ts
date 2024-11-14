@@ -13,11 +13,13 @@ const months: Record <number, string>={
     11: 'дек'
 }
 
-export const useDateConversion = (date: Date) =>{
 
-const day = date.getDate()
-const month = date.getMonth()
-const year = date.getFullYear()
+
+export const dateConversion = (date: string) =>{
+const dateObg = new Date(date)
+const day = dateObg.getDate()
+const month = dateObg.getMonth()
+const year = dateObg.getFullYear()
 
 return `${day} ${months[month]} ${year}г.`
 }

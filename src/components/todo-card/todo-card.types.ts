@@ -1,10 +1,10 @@
 export interface TodoCardProps {
-  isСompleted: boolean;
+  isCompleted: boolean;
   isDelete: boolean;
   handleDelete: VoidFunction;
   title: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
-  id: string
+  startDate: string;
+  endDate: string;
+  id: string;
 }

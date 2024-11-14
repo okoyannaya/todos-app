@@ -1,23 +1,26 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { TodoForm } from "@components/todo-form/todo-form";
-import { useStorageManagement } from "@hooks/useStorageManagement";
-import { RootTodos } from "src/types";
+import { addTodo, selectActiveTodos, updateTodo } from "@containers/redux/todos-slice";
+import { ITodoItem } from "src/types";
 
-import "./create-and-edit-page.styles.css"
-
+import "./create-and-edit-page.styles.css";
 
 export const CreateAndEditPage: React.FC = () => {
   const { id } = useParams<{id: string}>();
   const navigate = useNavigate();
-  const { saveTodoToLocalStorage } = useStorageManagement()
-  // const initialData = id ? todos.find((todo) => todo.id === id) : undefined;
+  const dispatch = useDispatch();
+  const activeTodos = useSelector(selectActiveTodos);
 
-  const handleFormSubmit = (todo: RootTodos) => {
+
+  const initialData = id ? activeTodos.find((todo) => todo.id === id) : undefined;
+
+  const handleFormSubmit = (todo: ITodoItem) => {
     if (id) {
-      saveTodoToLocalStorage(todo);
+      dispatch(updateTodo(todo));
       console.log("Обновление задачи:", todo);
     } else {
-      saveTodoToLocalStorage(todo);
+      dispatch(addTodo(todo));
       console.log("Создание новой задачи:", todo);
     }
     navigate("/");
@@ -25,9 +28,8 @@ export const CreateAndEditPage: React.FC = () => {
 
   return (
     <div className="create-and-edit-page">
-
       <h2>{id ? "Редактировать задачу" : "Создать задачу"}</h2>
-      <TodoForm /*initialData={initialData}*/ onSubmit={handleFormSubmit} />
+      <TodoForm initialData={initialData} onSubmit={handleFormSubmit} />
     </div>
   );
 };

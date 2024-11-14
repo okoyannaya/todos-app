@@ -8,17 +8,18 @@ import "./todos-list.styles.css";
 export const TodosList: FC<TodosListProps> = ({ todos }) => {
   return (
     <div className="todos-list">
-      {todos.map((item) => {
+      {todos.length && todos.map((item) => {
         return (
           <TodoCard
             description={item.description}
-            isСompleted={item.isСompleted}
+            isCompleted={item.isCompleted}
             isDelete={item.isDelete}
             title={item.title}
             startDate={item.startDate}
             endDate={item.endDate}
             id={item.id}
             handleDelete={() => {}}
+            key={item.id}
           />
         );
       })}

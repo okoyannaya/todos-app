@@ -1,6 +1,7 @@
 *{
   font-family: "Geist Mono", monospace;
   box-sizing: border-box;
+  
 }
 #root{
   width: 100%;
@@ -12,5 +13,6 @@ body {
   display: flex;
   width: 100dvw;
   height: 100dvh;
+  overflow-x: hidden;
 }
 

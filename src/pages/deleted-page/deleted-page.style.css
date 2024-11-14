@@ -1,0 +1,23 @@
+.deleted-page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 90px;
+}
+
+.clear-button {
+  flex-grow: 1;
+  padding: 8px 12px;
+  font-size: 0.9em;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 350px;
+}
+
+.clear-button:hover {
+  background-color: #0056b3;
+}

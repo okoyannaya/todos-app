@@ -1,6 +1,11 @@
-import { FC, useState } from "react";
+import { FC } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useDateConversion } from "@hooks/useDateConversion.ts";
+import { dateConversion } from "@components/helpers.ts";
+import {
+  deleteTodo,
+  toggleTodoCompleted,
+} from "@containers/redux/todos-slice.ts";
 
 import { TodoCardProps } from "./todo-card.types.ts";
 
@@ -9,24 +14,33 @@ import "./todo-card.styles.css";
 export const TodoCard: FC<TodoCardProps> = ({
   title,
   description,
-  isСompleted,
+  isCompleted,
+  isDelete,
   startDate,
   endDate,
-  handleDelete,
-  id
+  id,
 }) => {
-  const [isComplete, setIsComplete] = useState(isСompleted);
-  const startDateConversion = useDateConversion(startDate);
-  const endDateConversion = useDateConversion(endDate);
+  const startDateConversion = dateConversion(startDate);
+  const endDateConversion = dateConversion(endDate);
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  
+
   const changeCompleted = () => {
-    setIsComplete(!isComplete);
+    dispatch(toggleTodoCompleted(id));
   };
 
   const switchEditeTodo = (id: string) => {
     navigate(`/edit/${id}`);
+  };
+
+  const handleDeleteTodo = (id: string) => {
+    if (confirm("Вы действительно хотите удалить задачу?") == true) {
+      dispatch(deleteTodo(id));
+    } else {
+      return;
+    }
   };
 
   return (
@@ -46,20 +60,29 @@ export const TodoCard: FC<TodoCardProps> = ({
           <input
             className="todo-card__input"
             type="checkbox"
-            checked={isComplete}
+            checked={isCompleted}
             onChange={changeCompleted}
+            disabled={isDelete}
           />
         </div>
       </section>
 
-      <footer className="todo-card__controls">
-        <button className="todo-card__button" onClick={()=>switchEditeTodo(id)}>
-          Редактировать
-        </button>
-        <button className="todo-card__button" onClick={handleDelete}>
-          Удалить
-        </button>
-      </footer>
+      {!isDelete && (
+        <footer className="todo-card__controls">
+          <button
+            className="todo-card__button"
+            onClick={() => switchEditeTodo(id)}
+          >
+            Редактировать
+          </button>
+          <button
+            className="todo-card__button"
+            onClick={() => handleDeleteTodo(id)}
+          >
+            Удалить
+          </button>
+        </footer>
+      )}
     </article>
   );
 };
