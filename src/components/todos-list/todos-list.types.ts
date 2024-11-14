@@ -1,6 +1,5 @@
-import { RootTodos } from "src/types";
+import { ITodoItem } from "src/types";
 
-export interface TodosListProps{
-    todos: RootTodos[];
-
+export interface TodosListProps {
+  todos: ITodoItem[];
 }

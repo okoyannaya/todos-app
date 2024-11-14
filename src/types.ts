@@ -1,10 +1,10 @@
-export interface RootTodos {
-  isСompleted: boolean;
+
+export interface ITodoItem {
+  isCompleted: boolean;
   isDelete: boolean;
   title: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   id: string;
 }
-

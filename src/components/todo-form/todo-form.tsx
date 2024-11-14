@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { ru } from "date-fns/locale/ru";
-import { RootTodos } from "src/types";
+import { ITodoItem } from "src/types";
 
 import { TodoFormProps } from "./todo-form.types";
 
@@ -9,22 +9,19 @@ import "./todo-form.styles.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 export const TodoForm: React.FC<TodoFormProps> = ({ initialData, onSubmit }) => {
-  const [todo, setTodo] = useState<RootTodos>({
-    isСompleted: false,
+  const [todo, setTodo] = useState<ITodoItem>({
+    isCompleted: false,
     title: "",
     description: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: `${new Date()}`,
+    endDate: `${new Date()}`,
     isDelete: false,
     id: `${new Date()}`,
   });
+
   const [error, setError] = useState<string>("");
+
   registerLocale("ru", ru);
-  useEffect(() => {
-    if (initialData) {
-      setTodo(initialData);
-    }
-  }, [initialData]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -43,7 +40,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ initialData, onSubmit }) => 
     if (date) {
       setTodo((prev) => ({
         ...prev,
-        endDate: new Date(date),
+        endDate: new Date(date).toString(),
       }));
     }
   };
@@ -58,6 +55,12 @@ export const TodoForm: React.FC<TodoFormProps> = ({ initialData, onSubmit }) => 
     setError("");
     onSubmit(todo);
   };
+
+  useEffect(() => {
+    if (initialData) {
+      setTodo(initialData);
+    }
+  }, [initialData]);
 
   return (
     <form onSubmit={handleSubmit} className="todo-form">
@@ -90,7 +93,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ initialData, onSubmit }) => 
         <div className="todo-form__date-item">
           <label className="lable">Дата создания:</label>
           <DatePicker
-            selected={todo.startDate}
+            selected={new Date(todo.startDate)}
             onChange={handleDateChange}
             locale="ru"
             dateFormat="dd/MM/yyyy"
@@ -102,7 +105,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ initialData, onSubmit }) => 
         <div className="todo-form__date-item">
           <label className="lable">Дата завершения:</label>
           <DatePicker
-            selected={todo.endDate}
+            selected={new Date(todo.endDate)}
             onChange={handleDateChange}
             locale="ru"
             dateFormat="dd/MM/yyyy"
@@ -110,7 +113,6 @@ export const TodoForm: React.FC<TodoFormProps> = ({ initialData, onSubmit }) => 
             className="piker"
           />
         </div>
-        
       </div>
 
       <button className="todo-form__button" type="submit">

@@ -1,28 +1,15 @@
-import { useEffect, useState } from "react";
-import { Loader } from "@components/loader/loader";
+import { useSelector } from "react-redux";
 import { TodosList } from "@components/todos-list/todos-list";
-import { useStorageManagement } from "@hooks/useStorageManagement";
-import { RootTodos } from "src/types";
+import { selectActiveTodos } from "@containers/redux/todos-slice";
+
+import "./home-page.style.css";
 
 export const HomePage = () => {
-  const [todos, setTodos] = useState<RootTodos[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const { getTodosFromLocalStorage } = useStorageManagement();
-
-  const setActiveTodos = () => {
-    setIsLoading(true);
-    const activeTodos = getTodosFromLocalStorage("activeTodos");
-    setTodos(activeTodos);
-  };
-
-  useEffect(() => {
-    setActiveTodos();
-  }, []);
+  const activeTodos = useSelector(selectActiveTodos);
 
   return (
-    <div>
-      <Loader isLoading={isLoading} />
-      <TodosList todos={todos} />
+    <div className="home-page">
+      <TodosList todos={activeTodos} />
     </div>
   );
 };

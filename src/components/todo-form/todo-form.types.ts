@@ -1,7 +1,6 @@
-import { RootTodos } from "src/types";
+import { ITodoItem } from "src/types";
 
 export interface TodoFormProps {
-    initialData?: RootTodos;
-    onSubmit: (taskData: RootTodos) => void;
-  }
-  
+  initialData?: ITodoItem;
+  onSubmit: (taskData: ITodoItem) => void;
+}
