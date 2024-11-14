@@ -1,4 +1,3 @@
-/* Основной блок карточки тудушки */
 .todo-card {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
@@ -14,7 +13,6 @@
   box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
 }
 
-/* Заголовок карточки */
 .todo-card__title {
   font-size: 1.2em;
   font-weight: bold;
@@ -24,20 +22,19 @@
   padding-bottom: 6px;
 }
 
-/* Основной блок информации */
 .todo-card__info {
   font-size: 0.9em;
   color: #555;
   margin-bottom: 16px;
 }
 
-/* Описание тудушки */
 .todo-card__description {
   margin-bottom: 12px;
   color: #666;
+  min-height: 40px;
+  word-break: break-all;
 }
 
-/* Блок с датами */
 .todo-card__time {
   display: flex;
   flex-direction: column;
@@ -46,27 +43,23 @@
   color: #666;
 }
 
-/* Блок выполнения тудушки */
 .todo-card__completed {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Чекбокс выполнения */
 .todo-card__input {
   width: 16px;
   height: 16px;
   cursor: pointer;
 }
 
-/* Блок с кнопками */
 .todo-card__controls {
   display: flex;
   gap: 8px;
 }
 
-/* Стили кнопок */
 .todo-card__button {
   flex-grow: 1;
   padding: 8px 12px;
