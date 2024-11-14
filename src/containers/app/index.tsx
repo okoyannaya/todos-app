@@ -3,9 +3,9 @@ import { Router } from "@containers/router/router";
 
 export const App = () => {
   return (
-    <>
+    <div>
       <Navbar />
       <Router />
-    </>
+    </div>
   );
 };

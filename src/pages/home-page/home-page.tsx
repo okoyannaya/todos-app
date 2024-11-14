@@ -1,35 +1,28 @@
-import { useNavigate } from "react-router-dom";
-import { TodoCard } from "@components/todo-card/todo-card";
+import { useEffect, useState } from "react";
+import { Loader } from "@components/loader/loader";
+import { TodosList } from "@components/todos-list/todos-list";
 import { useStorageManagement } from "@hooks/useStorageManagement";
+import { RootTodos } from "src/types";
 
 export const HomePage = () => {
+  const [todos, setTodos] = useState<RootTodos[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { getTodosFromLocalStorage } = useStorageManagement();
-  const activeTodos = getTodosFromLocalStorage("activeTodos"); 
-  const navigate = useNavigate();
 
-  const switchEditeTodo = (id: string) => {
-    navigate(`/edit/${id}`);
+  const setActiveTodos = () => {
+    setIsLoading(true);
+    const activeTodos = getTodosFromLocalStorage("activeTodos");
+    setTodos(activeTodos);
   };
+
+  useEffect(() => {
+    setActiveTodos();
+  }, []);
 
   return (
     <div>
-      {activeTodos.map((item) => {
-        return (
-          <TodoCard
-            description={item.description}
-            isСompleted={item.isСompleted}
-            isDelete={item.isDelete}
-            title={item.title}
-            startDate={item.startDate}
-            endDate={item.endDate}
-            id={item.id}
-            handleEdit={() => {
-              switchEditeTodo(item.id);
-            }}
-            handleDelete={() => {}}
-          />
-        );
-      })}
+      <Loader isLoading={isLoading} />
+      <TodosList todos={todos} />
     </div>
   );
 };
