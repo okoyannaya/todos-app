@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { dateConversion } from "@components/helpers.ts";
@@ -20,6 +20,7 @@ export const TodoCard: FC<TodoCardProps> = ({
   endDate,
   id,
 }) => {
+  const [isCheck, setIsCheck] = useState(isCompleted)
   const startDateConversion = dateConversion(startDate);
   const endDateConversion = dateConversion(endDate);
 
@@ -28,6 +29,7 @@ export const TodoCard: FC<TodoCardProps> = ({
   const navigate = useNavigate();
 
   const changeCompleted = () => {
+    setIsCheck(!isCheck)
     dispatch(toggleTodoCompleted(id));
   };
 
@@ -60,7 +62,7 @@ export const TodoCard: FC<TodoCardProps> = ({
           <input
             className="todo-card__input"
             type="checkbox"
-            checked={isCompleted}
+            checked={isCheck}
             onChange={changeCompleted}
             disabled={isDelete}
           />

@@ -21,9 +21,9 @@ export const DeletedPage = () => {
   };
 
   return (
-    <div className="deleted-page">
+    <div >
       {deletedTodos.length ? (
-        <div>
+        <div className="deleted-page">
           <button className="clear-button" onClick={handleClearTrash}>
             Очистить корзину
           </button>
