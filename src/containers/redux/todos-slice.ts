@@ -1,7 +1,7 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ITodoItem} from "src/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ITodoItem } from "src/types";
 
-import {RootState} from "./store";
+import { RootState } from "./store";
 
 interface TodosState {
   activeTodos: ITodoItem[];

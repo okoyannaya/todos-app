@@ -22,7 +22,7 @@ export const DeletedPage = () => {
 
   return (
     <div >
-      {deletedTodos.length ? (
+      {deletedTodos.length !== 0 ? (
         <div className="deleted-page">
           <button className="clear-button" onClick={handleClearTrash}>
             Очистить корзину
