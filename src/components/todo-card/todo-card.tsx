@@ -1,9 +1,10 @@
 import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { dateConversion } from "@components/helpers.ts";
+import { useAppDispatch } from "@containers/redux/constants.ts";
 import {
   deleteTodo,
+  syncWithLocalStorage,
   toggleTodoCompleted,
 } from "@containers/redux/todos-slice.ts";
 
@@ -20,17 +21,18 @@ export const TodoCard: FC<TodoCardProps> = ({
   endDate,
   id,
 }) => {
-  const [isCheck, setIsCheck] = useState(isCompleted)
+  const [isCheck, setIsCheck] = useState(isCompleted);
   const startDateConversion = dateConversion(startDate);
   const endDateConversion = dateConversion(endDate);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
   const changeCompleted = () => {
-    setIsCheck(!isCheck)
+    setIsCheck(!isCheck);
     dispatch(toggleTodoCompleted(id));
+    dispatch(syncWithLocalStorage());
   };
 
   const switchEditeTodo = (id: string) => {
@@ -40,6 +42,7 @@ export const TodoCard: FC<TodoCardProps> = ({
   const handleDeleteTodo = (id: string) => {
     if (confirm("Вы действительно хотите удалить задачу?") == true) {
       dispatch(deleteTodo(id));
+      dispatch(syncWithLocalStorage());
     } else {
       return;
     }

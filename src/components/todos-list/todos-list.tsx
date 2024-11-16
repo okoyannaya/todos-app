@@ -45,8 +45,6 @@ export const TodosList: FC<TodosListProps> = ({ todos }) => {
     });
   };
 
-  console.log("пришли туту", todos);
-
   const setNextChunk = () => {
     setChunkIdx((p) => p + 1);
     const newChunks = tempArr[chunkIdx + 1] ?? [];
