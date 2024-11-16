@@ -21,7 +21,7 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      
+      "react-hooks/exhaustive-deps": "off",
       "object-curly-spacing": ["warn", "always"],
       "newline-before-return": "error",
 

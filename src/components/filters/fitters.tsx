@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { useDispatch } from "react-redux";
 import { clearFilters } from "@containers/redux/todos-slice";
@@ -14,6 +14,7 @@ interface FiltersProps {
 }
 
 const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
+  const [allTodos, setAllTodos] = useState<ITodoItem[]>([])
   const [filterType, setFilterType] = useState<string>("");
   const [startDate, setStartDate] = useState<string>(new Date().toString());
   const [endDate, setEndDate] = useState<string>(new Date().toString());
@@ -33,7 +34,7 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
   };
 
   const filterTodos = () => {
-    const filtered = todos.filter((todo) => {
+    const filtered = allTodos.filter((todo) => {
       const todoStartDate = new Date(todo.startDate);
       const todoEndDate = new Date(todo.endDate);
 
@@ -66,9 +67,13 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
     setEndDate(new Date().toString());
     setTitle("");
     setIsCompleted(null);
-    onFilter(todos);
+    onFilter(allTodos);
     dispatch(clearFilters());
   };
+
+useEffect(()=>{
+setAllTodos(todos)
+},[todos])
 
   return (
     <div className="filters">
