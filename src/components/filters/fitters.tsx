@@ -1,7 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import { useDispatch } from "react-redux";
-import { clearFilters } from "@containers/redux/todos-slice";
 import { ru } from "date-fns/locale";
 import { ITodoItem } from "src/types";
 
@@ -14,14 +12,12 @@ interface FiltersProps {
 }
 
 const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
-  const [allTodos, setAllTodos] = useState<ITodoItem[]>([])
+  const [allTodos, setAllTodos] = useState<ITodoItem[]>([]);
   const [filterType, setFilterType] = useState<string>("");
   const [startDate, setStartDate] = useState<string>(new Date().toString());
   const [endDate, setEndDate] = useState<string>(new Date().toString());
   const [title, setTitle] = useState<string>("");
   const [isCompleted, setIsCompleted] = useState<boolean | null>(null);
-
-  const dispatch = useDispatch();
 
   registerLocale("ru", ru);
 
@@ -39,19 +35,15 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
       const todoEndDate = new Date(todo.endDate);
 
       if (filterType === "startDate" && startDate) {
-        
         return isSameDate(todoStartDate, new Date(startDate));
       }
       if (filterType === "endDate" && endDate) {
-
         return isSameDate(todoEndDate, new Date(endDate));
       }
       if (filterType === "title" && title) {
-
         return todo.title.toLowerCase().includes(title.toLowerCase());
       }
       if (filterType === "isCompleted" && isCompleted !== null) {
-
         return todo.isCompleted === isCompleted;
       }
 
@@ -68,12 +60,11 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
     setTitle("");
     setIsCompleted(null);
     onFilter(allTodos);
-    dispatch(clearFilters());
   };
 
-useEffect(()=>{
-setAllTodos(todos)
-},[todos])
+  useEffect(() => {
+    setAllTodos(todos);
+  }, [todos]);
 
   return (
     <div className="filters">

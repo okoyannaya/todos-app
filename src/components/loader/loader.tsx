@@ -12,7 +12,7 @@ export const Loader: FC<LoaderProps> = ({ isLoading }) => {
     } else {
       document.body.style.overflow = "";
     }
-
+    
     return () => {
       document.body.style.overflow = "";
     };

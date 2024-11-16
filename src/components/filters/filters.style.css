@@ -18,6 +18,10 @@
   border-radius: 4px;
 }
 
+.filter-select option {
+  max-width: 100%; 
+}
+
 .filters-container {
   height: 30px;
 }
