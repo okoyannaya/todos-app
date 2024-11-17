@@ -1,33 +1,29 @@
 import { useSelector } from "react-redux";
-import { SyncStatus } from "@components/sync-status/sync-status";
 import { TodosList } from "@components/todos-list/todos-list";
-import { useAppDispatch } from "@containers/redux/constants";
+import { useAppDispatch } from "@containers/redux/hooks";
+import { selectDeletedTodos } from "@containers/redux/selectors";
 import {
   clearDeletedTodos,
-  selectDeletedTodos,
   syncWithLocalStorage,
 } from "@containers/redux/todos-slice";
 
-import "./deleted-page.style.css";
+import "./deleted-page.styles.css";
 
 export const DeletedPage = () => {
-  const deletedTodos = useSelector(selectDeletedTodos);
   const dispatch = useAppDispatch();
+  const deletedTodos = useSelector(selectDeletedTodos);
 
   const handleClearTrash = () => {
-    if (confirm("Вы действительно хотите очистить корзину?") == true) {
+    if (confirm("Вы действительно хотите очистить корзину?")) {
       dispatch(clearDeletedTodos());
       dispatch(syncWithLocalStorage());
-    } else {
-      return;
-    }
+    } else return;
   };
 
   return (
-    <div>
-      <SyncStatus />
-      {deletedTodos.length !== 0 ? (
-        <div className="deleted-page">
+    <div className="deleted-page">
+      {deletedTodos.length ? (
+        <div >
           <button className="clear-button" onClick={handleClearTrash}>
             Очистить корзину
           </button>

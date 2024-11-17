@@ -1,24 +1,25 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
+import { ITodoItem } from "@containers/redux/types";
 import { ru } from "date-fns/locale/ru";
-import { ITodoItem } from "src/types";
 
 import { TodoFormProps } from "./todo-form.types";
 
 import "./todo-form.styles.css";
 import "react-datepicker/dist/react-datepicker.css";
 
-export const TodoForm: React.FC<TodoFormProps> = ({ initialData, onSubmit }) => {
-  const [todo, setTodo] = useState<ITodoItem>({
-    isCompleted: false,
-    title: "",
-    description: "",
-    startDate: `${new Date()}`,
-    endDate: `${new Date()}`,
-    isDelete: false,
-    id: `${new Date()}`,
-  });
+const initialFormState = {
+  isCompleted: false,
+  title: "",
+  description: "",
+  startDate: `${new Date()}`,
+  endDate: `${new Date()}`,
+  isDelete: false,
+  id: `${new Date()}`,
+};
 
+export const TodoForm: React.FC<TodoFormProps> = ({ initialData, onSubmit }) => {
+  const [todo, setTodo] = useState<ITodoItem>(initialFormState);
   const [error, setError] = useState<string>("");
 
   registerLocale("ru", ru);

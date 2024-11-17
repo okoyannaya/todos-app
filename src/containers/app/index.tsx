@@ -1,17 +1,20 @@
-import { useSelector } from "react-redux";
-import { Loader } from "@components/loader/loader";
-import { Navbar } from "@components/navbar/navbar";
-import { selectIsSyncing } from "@containers/redux/todos-slice";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { Layout } from "@components/layout";
+import { store } from "@containers/redux/store";
 import { Router } from "@containers/router/router";
 
-export const App = () => {
-  const isSyncing = useSelector(selectIsSyncing);
-  
-return (
-    <div>
-      <Loader isLoading={isSyncing} />
-      <Navbar />
-      <Router />
-    </div>
-  );
-};
+export const App = () => (
+  <Provider store={store}>
+    <BrowserRouter
+      future={{
+        v7_relativeSplatPath: true,
+        v7_startTransition: true,
+      }}
+    >
+      <Layout>
+        <Router />
+      </Layout>
+    </BrowserRouter>
+  </Provider>
+);
