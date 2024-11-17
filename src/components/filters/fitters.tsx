@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useMemo, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
+import { ITodoItem } from "@containers/redux/types";
 import { ru } from "date-fns/locale";
-import { ITodoItem } from "src/types";
 
-import "./filters.style.css";
+import "./filters.styles.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface FiltersProps {
@@ -11,7 +11,7 @@ interface FiltersProps {
   onFilter: (filteredTodos: ITodoItem[]) => void;
 }
 
-const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
+export const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
   const [allTodos, setAllTodos] = useState<ITodoItem[]>([]);
   const [filterType, setFilterType] = useState<string>("");
   const [startDate, setStartDate] = useState<string>(new Date().toString());
@@ -29,7 +29,7 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
     );
   };
 
-  const filterTodos = () => {
+  const handleFilterTodos = () => {
     const filtered = allTodos.filter((todo) => {
       const todoStartDate = new Date(todo.startDate);
       const todoEndDate = new Date(todo.endDate);
@@ -53,7 +53,7 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
     onFilter(filtered);
   };
 
-  const resetFilters = () => {
+  const handleResetFilters = () => {
     setFilterType("");
     setStartDate(new Date().toString());
     setEndDate(new Date().toString());
@@ -62,6 +62,27 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
     onFilter(allTodos);
   };
 
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) =>
+    setIsCompleted(e.target.value === "" ? null : e.target.value === "true");
+
+  const handleStartDateChange = (date: Date | null) => setStartDate((date as Date).toString());
+  const handleEndDateChange = (date: Date | null) => setEndDate((date as Date).toString());
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+
+  const datePickerProps = useMemo(
+    () => ({
+      startDate: {
+        selected: new Date(startDate),
+        onChange: handleStartDateChange,
+      },
+      endDate: {
+        selected: new Date(endDate),
+        onChange: handleEndDateChange,
+      },
+    }),
+    [startDate, endDate]
+  );
+
   useEffect(() => {
     setAllTodos(todos);
   }, [todos]);
@@ -69,7 +90,6 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
   return (
     <div className="filters">
       <span className="filters-header">Фильтры:</span>
-
       <div className="filter-group">
         <select
           className="filter-select"
@@ -85,30 +105,16 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
         </select>
       </div>
       <div className="filters-container">
-        {filterType === "startDate" && (
+        {(filterType === "startDate" || filterType === "endDate") && (
           <div>
             <DatePicker
-              selected={new Date(startDate)}
-              onChange={(date) => setStartDate((date as Date).toString())}
               locale="ru"
               dateFormat="dd/MM/yyyy"
               className="filter-picker"
+              {...datePickerProps[filterType]}
             />
           </div>
         )}
-
-        {filterType === "endDate" && (
-          <div>
-            <DatePicker
-              selected={new Date(endDate)}
-              onChange={(date) => setEndDate((date as Date).toString())}
-              locale="ru"
-              dateFormat="dd/MM/yyyy"
-              className="filter-picker"
-            />
-          </div>
-        )}
-
         {filterType === "title" && (
           <div className="filter-group">
             <input
@@ -116,23 +122,18 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
               type="text"
               id="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleInputChange}
               placeholder="Введите название..."
             />
           </div>
         )}
-
         {filterType === "isCompleted" && (
           <div className="filter-group">
             <select
               className="filter-select"
               id="isCompleted"
               value={isCompleted === null ? "" : isCompleted ? "true" : "false"}
-              onChange={(e) =>
-                setIsCompleted(
-                  e.target.value === "" ? null : e.target.value === "true"
-                )
-              }
+              onChange={handleSelectChange}
             >
               <option value="">Все</option>
               <option value="true">Завершенные</option>
@@ -142,15 +143,13 @@ const Filters: FC<FiltersProps> = ({ todos, onFilter }) => {
         )}
       </div>
       <div className="filters-button-group">
-        <button className="filters-button" onClick={filterTodos}>
+        <button className="filters-button" onClick={handleFilterTodos}>
           Применить фильтр
         </button>
-        <button className="filters-button" onClick={resetFilters}>
+        <button className="filters-button" onClick={handleResetFilters}>
           Сбросить фильтр
         </button>
       </div>
     </div>
   );
 };
-
-export default Filters;

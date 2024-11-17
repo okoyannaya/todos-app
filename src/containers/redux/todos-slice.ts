@@ -1,14 +1,7 @@
+import { ITodoItem, TodosState } from "@containers/redux/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ITodoItem } from "src/types";
 
 import { RootState } from "./store";
-
-interface TodosState {
-  activeTodos: ITodoItem[];
-  deletedTodos: ITodoItem[];
-  isSyncing: boolean;
-  syncError: string | null;
-}
 
 const loadActiveTodosFromLocalStorage = (): ITodoItem[] => {
   const activeTodos = localStorage.getItem("activeTodos");
@@ -37,7 +30,7 @@ export const syncWithLocalStorage = createAsyncThunk<
   const { activeTodos, deletedTodos } = getState().todos;
 
   await new Promise((resolve) => setTimeout(resolve, 500));
-  if (Math.random() < 0.5) {
+  if (Math.round(Math.random() * 100) <= 50) {
     return rejectWithValue("Ошибка синхронизации");
   }
 
@@ -103,11 +96,5 @@ export const {
   toggleTodoCompleted,
   clearDeletedTodos,
 } = todosSlice.actions;
-
-export const selectActiveTodos = (state: RootState) => state.todos.activeTodos;
-export const selectDeletedTodos = (state: RootState) =>
-  state.todos.deletedTodos;
-export const selectIsSyncing = (state: RootState) => state.todos.isSyncing;
-export const selectSyncError = (state: RootState) => state.todos.syncError;
 
 export default todosSlice.reducer;

@@ -1,0 +1,82 @@
+.status-badge {
+    background-color: #e0e0e0;
+    width: 100%;
+    height: 30px;
+    position: fixed;
+    bottom: 0px;
+    left: 0
+}
+
+.status-badge_sync-info {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    left: 40px;
+    top: 0
+}
+
+.status-badge_retry-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+    color: black;
+    gap: 4px;
+    margin-left: 4px;
+    width: fit-content;
+    height: 25px
+}
+
+.status-badge_retry-button-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-size: cover;
+    background-image: url(../../assets/retry.png);
+}
+
+.status-badge_icon {
+    position: relative;
+}
+
+.status-badge_icon-dot {
+    width: 15px;
+    height: 15px;
+    background-color: #62bd19;
+    border-radius: 50%;
+    position: absolute;
+    top: 8px;
+    left: 15px;
+}
+
+.status-badge_icon-ring {
+    border: 3px solid #62bd19;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    left: 10px;
+    top: 3px;
+    opacity: 0.0
+}
+
+.status-badge_icon-ring-animation {
+    animation: pulsate 1s ease-out;
+    -webkit-animation: pulsate 1s ease-out;
+    animation-iteration-count: infinite; 
+    -webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+    50% {opacity: 1.0;}
+    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}
+
+@keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+    50% {opacity: 1.0;}
+    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}

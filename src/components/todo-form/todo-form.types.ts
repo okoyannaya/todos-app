@@ -1,4 +1,4 @@
-import { ITodoItem } from "src/types";
+import { ITodoItem } from "@containers/redux/types";
 
 export interface TodoFormProps {
   initialData?: ITodoItem;
