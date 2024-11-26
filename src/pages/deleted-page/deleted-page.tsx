@@ -21,16 +21,18 @@ export const DeletedPage = () => {
   };
 
   return (
-    <div className="deleted-page">
+    <div>
       {deletedTodos.length ? (
-        <div >
+        <div className="deleted-page">
           <button className="clear-button" onClick={handleClearTrash}>
             Очистить корзину
           </button>
           <TodosList todos={deletedTodos} />
         </div>
       ) : (
-        <div>Пока нет задач в корзине</div>
+        <div className="deleted-page">
+          <h2>Пока нет задач в корзине</h2>
+        </div>
       )}
     </div>
   );

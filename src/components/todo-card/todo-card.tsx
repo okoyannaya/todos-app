@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { dateConversion } from "@components/helpers.ts";
 import { useAppDispatch } from "@containers/redux/hooks.ts";
 import {
-  deleteTodo,
   syncWithLocalStorage,
   toggleTodoCompleted,
 } from "@containers/redux/todos-slice.ts";
@@ -18,6 +17,7 @@ export const TodoCard: FC<TodoCardProps> = ({
   isCompleted,
   isDelete,
   startDate,
+  handleDeleteTodo,
   endDate,
   id,
 }) => {
@@ -36,13 +36,6 @@ export const TodoCard: FC<TodoCardProps> = ({
 
   const handleEditeTodoSwitch = () => {
     navigate(`/edit/${id}`);
-  };
-
-  const handleDeleteTodo = () => {
-    if (confirm("Вы действительно хотите удалить задачу?")) {
-      dispatch(deleteTodo(id));
-      dispatch(syncWithLocalStorage());
-    } else return;
   };
 
   return (
