@@ -72,7 +72,14 @@ const todosSlice = createSlice({
     clearDeletedTodos: (state) => {
       state.deletedTodos = [];
     },
+    
+    handleIsSyncing: (state, action: PayloadAction<boolean>) => {
+      state.isSyncing = action.payload;
+    },
   },
+    
+  
+
   extraReducers: (builder) => {
     builder
       .addCase(syncWithLocalStorage.pending, (state) => {
@@ -95,6 +102,7 @@ export const {
   updateTodo,
   toggleTodoCompleted,
   clearDeletedTodos,
+  handleIsSyncing,
 } = todosSlice.actions;
 
 export default todosSlice.reducer;

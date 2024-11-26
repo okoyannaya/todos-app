@@ -6,4 +6,5 @@ export interface TodoCardProps {
   startDate: string;
   endDate: string;
   id: string;
+  handleDeleteTodo?: ()=>void
 }
